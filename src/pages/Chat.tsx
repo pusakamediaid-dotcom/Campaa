@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { AIMessage, AIMode } from '../lib/types'
 import { sendChatMessage, sendChatMessageDemo } from '../lib/api'
-import { getDemoResponse } from '../lib/promptEnhancer'
+import { getDemoResponse, enhancePrompt } from '../lib/promptEnhancer'
 import { saveSessions, loadSessions } from '../lib/storage'
 import MessageBubble from '../components/MessageBubble'
 import ModeSelector from '../components/ModeSelector'
@@ -37,6 +37,12 @@ export default function Chat({
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Handle enhanced prompt from ChatInput
+  const handleEnhancePrompt = (enhancedText: string) => {
+    // Just send the enhanced text as a new message
+    handleSendMessage(enhancedText)
+  }
 
   const handleSendMessage = async (text: string) => {
     const userMessage: AIMessage = {
@@ -114,10 +120,6 @@ export default function Chat({
     }
   }
 
-  const handleClearChat = () => {
-    setMessages([])
-  }
-
   return (
     <div className="chat-page">
       <div className="chat-header">
@@ -168,7 +170,7 @@ export default function Chat({
 
       <ChatInput 
         onSendMessage={handleSendMessage}
-        onEnhancePrompt={() => {}}
+        onEnhancePrompt={handleEnhancePrompt}
         isLoading={isLoading}
         currentMode={currentMode}
       />

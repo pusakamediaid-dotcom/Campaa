@@ -38,11 +38,14 @@ export default function ChatInput({
     }
   }
 
-  const handleEnhance = (type: string) => {
-    if (input.trim()) {
-      const result = enhancePrompt(input, type, currentMode)
-      setInput(result.enhanced)
-    }
+  // Enhance and send directly
+  const handleEnhanceAndSend = (type: string) => {
+    if (!input.trim() || isLoading) return
+    
+    const result = enhancePrompt(input, type, currentMode)
+    // Clear input and send enhanced version
+    setInput('')
+    onEnhancePrompt(result.enhanced)
   }
 
   return (
@@ -52,8 +55,9 @@ export default function ChatInput({
           <button 
             key={type.id}
             className="enhancer-btn"
-            onClick={() => handleEnhance(type.id)}
+            onClick={() => handleEnhanceAndSend(type.id)}
             title={type.description}
+            disabled={!input.trim() || isLoading}
           >
             {type.label}
           </button>
@@ -66,7 +70,7 @@ export default function ChatInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ketik pesan Anda..."
+          placeholder="Ketik pesan Anda... (Enter untuk kirim, Shift+Enter untuk baris baru)"
           rows={1}
           disabled={isLoading}
         />
@@ -77,7 +81,7 @@ export default function ChatInput({
         >
           {isLoading ? (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
+              <path d="M21 12a9 9 0 11-6.219-8.56" />
             </svg>
           ) : (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
