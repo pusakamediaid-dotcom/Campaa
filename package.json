@@ -9,7 +9,8 @@
     "build:api": "tsc -p tsconfig.api.json",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.app.json --noEmit",
-    "typecheck:all": "tsc --noEmit"
+    "typecheck:all": "tsc --noEmit",
+    "check": "npm run typecheck && npm run build"
   },
   "dependencies": {
     "react": "^18.3.1",
