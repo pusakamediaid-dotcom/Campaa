@@ -1,6 +1,6 @@
 import { AIMessage } from './types'
 import { getSystemPrompt } from './prompts'
-import { getDemoResponse } from './promptEnhancer'
+import { getSmartDemoResponse } from './promptEnhancer'
 
 export interface ChatRequest {
   message: string
@@ -18,6 +18,23 @@ export interface ChatResponse {
 
 const API_BASE = '/api'
 
+const getFriendlyProviderError = (provider: string): string => {
+  const providerLabel = getProviderLabel(provider)
+  return `${providerLabel} belum aktif di server. Saya lanjutkan dengan Campaa Lite agar percakapan tetap berjalan.`
+}
+
+export const getProviderLabel = (provider: string): string => {
+  const labels: Record<string, string> = {
+    demo: 'Campaa Lite',
+    openai: 'OpenAI',
+    gemini: 'Gemini',
+    openrouter: 'OpenRouter',
+    fallback: 'Campaa Lite • fallback'
+  }
+
+  return labels[provider] || provider || 'Campaa Lite'
+}
+
 export const sendChatMessage = async (request: ChatRequest): Promise<ChatResponse> => {
   try {
     const response = await fetch(`${API_BASE}/chat`, {
@@ -29,11 +46,11 @@ export const sendChatMessage = async (request: ChatRequest): Promise<ChatRespons
     })
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}))
       return {
         success: false,
         text: '',
-        error: errorData.message || `Request failed with status ${response.status}`
+        error: getFriendlyProviderError(request.provider),
+        provider: request.provider
       }
     }
 
@@ -43,26 +60,20 @@ export const sendChatMessage = async (request: ChatRequest): Promise<ChatRespons
       text: data.text || '',
       provider: data.provider || request.provider
     }
-  } catch (error) {
-    if (error instanceof TypeError && error.message.includes('fetch')) {
-      return {
-        success: false,
-        text: '',
-        error: 'Tidak dapat terhubung ke server. Pastikan API backend sudah dideploy.'
-      }
-    }
+  } catch {
     return {
       success: false,
       text: '',
-      error: 'Terjadi kesalahan saat menghubungi server.'
+      error: getFriendlyProviderError(request.provider),
+      provider: request.provider
     }
   }
 }
 
-export const sendChatMessageDemo = (mode: string): ChatResponse => {
+export const sendChatMessageDemo = (request: Pick<ChatRequest, 'message' | 'mode' | 'history'>): ChatResponse => {
   return {
     success: true,
-    text: getDemoResponse(mode),
+    text: getSmartDemoResponse(request.message, request.mode, request.history),
     provider: 'demo'
   }
 }
