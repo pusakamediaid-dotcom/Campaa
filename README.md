@@ -6,13 +6,13 @@ Campaa AI is designed as a premium-looking AI assistant demo website for content
 
 ## Live Demo
 
-Coming soon after Vercel deployment.
+https://campaa-2xas.vercel.app
 
 ## Current Status
 
-**Premium Demo Website Preparation**
+**Published Premium Demo Website**
 
-Campaa is being prepared for public portfolio publication as a polished no-budget demo website. Demo Mode is the default no-cost mode. OpenAI, Gemini, and OpenRouter are optional provider modes and require server-side environment configuration if enabled.
+Campaa is published as a public portfolio demo website on Vercel. Demo Mode is the default no-cost mode. OpenAI, Gemini, and OpenRouter are optional provider modes and require server-side environment configuration if enabled.
 
 Recommended repo description:
 
@@ -95,7 +95,7 @@ Recommended deployment path:
 - Demo Mode as default.
 - No paid provider access required for the initial public demo.
 
-Do not claim a live Vercel deployment until a production URL has been created and verified.
+The current Vercel demo URL is listed in the Live Demo section above.
 
 See [docs/VERCEL_FREE_DEPLOYMENT_CHECKLIST.md](docs/VERCEL_FREE_DEPLOYMENT_CHECKLIST.md) for deployment preparation.
 
@@ -210,7 +210,7 @@ Campaa/
 
 ## Publication Status
 
-Campaa is ready for premium demo website deployment preparation. The next major manual step is importing the repository into Vercel Hobby, deploying with Demo Mode as default, and verifying the production URL before updating the README with a real live demo link.
+Campaa has been prepared and published as a premium demo website on Vercel. The remaining manual steps are to add the Vercel URL to the GitHub repository website field, verify the public demo in a browser, and create the first GitHub release tag.
 
 ## License
 
