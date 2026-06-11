@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { AIMessage, AIMode } from '../lib/types'
-import { getProviderLabel, sendChatMessage, sendChatMessageDemo } from '../lib/api'
+import { ChatRequest, getProviderLabel, sendChatMessage, sendChatMessageDemo } from '../lib/api'
 import { saveSessions, loadSessions } from '../lib/storage'
 import MessageBubble from '../components/MessageBubble'
 import ModeSelector from '../components/ModeSelector'
@@ -49,7 +49,11 @@ export default function Chat({
     setProviderNotice('')
   }, [currentProvider])
 
-  const buildHistory = (items: AIMessage[]) => items.map(m => ({ role: m.role, content: m.content }))
+  const buildHistory = (items: AIMessage[]): ChatRequest['history'] => {
+    return items
+      .filter(m => m.role === 'user' || m.role === 'assistant')
+      .map(m => ({ role: m.role, content: m.content }))
+  }
 
   const handleEnhancePrompt = (enhancedText: string) => {
     handleSendMessage(enhancedText)
