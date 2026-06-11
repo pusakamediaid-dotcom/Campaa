@@ -1,6 +1,6 @@
 # Campaa AI
 
-Premium AI assistant demo with multi-mode intelligence, local tools, Demo Mode, and optional provider integrations.
+Premium AI assistant demo with multi-mode intelligence, local tools, Campaa Lite, and optional provider integrations.
 
 Campaa AI is designed as a premium-looking AI assistant demo website for content, research, coding, business strategy, and ebook workflow planning. It is positioned as a public portfolio demo, not as a production SaaS or guaranteed income system.
 
@@ -10,13 +10,21 @@ https://campaa-2xas.vercel.app
 
 ## Current Status
 
-**Published Premium Demo Website**
+**Published Premium Demo Website — v1.2.0 Smart Demo Upgrade**
 
-Campaa is published as a public portfolio demo website on Vercel. Demo Mode is the default no-cost mode. OpenAI, Gemini, and OpenRouter are optional provider modes and require server-side environment configuration if enabled.
+Campaa is published as a public portfolio demo website on Vercel. Campaa Lite is the default no-cost mode. OpenAI, Gemini, and OpenRouter are optional provider modes and require server-side environment configuration if enabled.
 
 Recommended repo description:
 
-> Premium AI assistant demo with multi-mode intelligence, local tools, demo mode, and optional provider integrations.
+> Premium AI assistant demo with multi-mode intelligence, local tools, smart demo mode, and optional provider integrations.
+
+## v1.2.0 Upgrade Scope
+
+- Smart Demo Mode through Campaa Lite.
+- Context-aware fallback when external provider routes are unavailable.
+- Premium mobile chat UI with sticky compact header and input area.
+- Friendly provider error handling without raw technical errors.
+- No API key required for the default demo experience.
 
 ## Core Features
 
@@ -54,11 +62,11 @@ Recommended repo description:
 - Cost guard for usage awareness.
 - Memory system for conversation history.
 
-## Demo Mode Explanation
+## Campaa Lite / Demo Mode Explanation
 
-Demo Mode is the default no-cost mode. It allows Campaa to be published as a premium website demo without requiring paid provider access from visitors.
+Campaa Lite is the default no-cost mode. It now reads the user's message and provides contextual responses for ebook, research, prompt, coding, business, security, UI, and general requests.
 
-Use Demo Mode for the first public Vercel deployment. This keeps the demo safe, predictable, and accessible.
+Use Campaa Lite for the default public Vercel demo. This keeps the demo safe, predictable, and accessible without requiring paid provider access from visitors.
 
 ## AI Provider Explanation
 
@@ -70,7 +78,7 @@ Campaa includes optional provider paths for:
 
 These provider modes are optional. They require server-side environment configuration if enabled on Vercel or another hosting platform.
 
-Without provider environment configuration, Campaa should remain usable in Demo Mode.
+Without provider environment configuration, Campaa continues with Campaa Lite fallback instead of showing raw technical errors.
 
 ## Security Note
 
@@ -92,7 +100,7 @@ Recommended deployment path:
 
 - Vercel Hobby.
 - Vite framework.
-- Demo Mode as default.
+- Campaa Lite as default.
 - No paid provider access required for the initial public demo.
 
 The current Vercel demo URL is listed in the Live Demo section above.
@@ -201,7 +209,7 @@ Campaa/
 ## Limitations
 
 - Campaa is not positioned as a paid production SaaS yet.
-- Demo Mode is the recommended default for public no-budget deployment.
+- Campaa Lite is the recommended default for public no-budget deployment.
 - Real provider modes require server-side environment configuration.
 - Provider quota and token limits depend on the selected provider.
 - Data persistence is limited to localStorage.
@@ -210,7 +218,7 @@ Campaa/
 
 ## Publication Status
 
-Campaa has been prepared and published as a premium demo website on Vercel. The remaining manual steps are to add the Vercel URL to the GitHub repository website field, verify the public demo in a browser, and create the first GitHub release tag.
+Campaa has been prepared and published as a premium demo website on Vercel. v1.2.0 improves the chat experience, smart demo behavior, fallback handling, and mobile-first UI polish. The remaining manual steps are to verify the public demo after deployment and create the first GitHub release tag.
 
 ## License
 
