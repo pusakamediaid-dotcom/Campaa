@@ -8,14 +8,15 @@ interface ChatInputProps {
   currentMode: string
 }
 
-export default function ChatInput({ 
-  onSendMessage, 
+export default function ChatInput({
+  onSendMessage,
   onEnhancePrompt,
   isLoading,
   currentMode
 }: ChatInputProps) {
   const [input, setInput] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const hasInput = Boolean(input.trim())
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -25,7 +26,7 @@ export default function ChatInput({
   }, [input])
 
   const handleSubmit = () => {
-    if (input.trim() && !isLoading) {
+    if (hasInput && !isLoading) {
       onSendMessage(input.trim())
       setInput('')
     }
@@ -38,26 +39,25 @@ export default function ChatInput({
     }
   }
 
-  // Enhance and send directly
   const handleEnhanceAndSend = (type: string) => {
-    if (!input.trim() || isLoading) return
-    
+    if (!hasInput || isLoading) return
+
     const result = enhancePrompt(input, type, currentMode)
-    // Clear input and send enhanced version
     setInput('')
     onEnhancePrompt(result.enhanced)
   }
 
   return (
     <div className="chat-input-area">
-      <div className="enhancer-tools">
+      <div className={`enhancer-tools ${!hasInput ? 'empty' : ''}`} aria-label="Prompt enhancer">
         {ENHANCEMENT_TYPES.map(type => (
-          <button 
+          <button
             key={type.id}
             className="enhancer-btn"
             onClick={() => handleEnhanceAndSend(type.id)}
             title={type.description}
-            disabled={!input.trim() || isLoading}
+            disabled={!hasInput || isLoading}
+            type="button"
           >
             {type.label}
           </button>
@@ -70,17 +70,19 @@ export default function ChatInput({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ketik pesan Anda... (Enter untuk kirim, Shift+Enter untuk baris baru)"
+          placeholder="Tulis pesan..."
           rows={1}
           disabled={isLoading}
         />
-        <button 
-          className="send-btn" 
+        <button
+          className="send-btn"
           onClick={handleSubmit}
-          disabled={!input.trim() || isLoading}
+          disabled={!hasInput || isLoading}
+          type="button"
+          aria-label="Kirim pesan"
         >
           {isLoading ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="send-spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 12a9 9 0 11-6.219-8.56" />
             </svg>
           ) : (
